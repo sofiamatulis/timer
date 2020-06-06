@@ -1,25 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import './App.css';
+import Button from './styles'
+import Timingscreen from './Timingscreen'
 
 const Timer = styled.div`
-  background-color: pink;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #E23D28;
+  color: white;
+  font-size: 3rem;
+  padding: 1rem 1rem;
+`
+
+
+
+const Input = styled.input`
+  min-height: 100px;
+  font-size: 4rem;
+`
+
+const Inputs = styled.div`
+  display: flex;
+  padding-bottom: 2rem;
+  & p, input {
+    margin-right: 1rem;
+  }
 `
 
 function App() {
 
   const [countdown, updateCountdown] = useState({ minutes: 0, seconds: 0})
 
-  const [currentCountdown, startCountdown] = useState()
+  const [currentCountdown, startCountdown] = useState(0)
 
   const [isTimerBlocked, blockTimer] = useState(false)
 
   const updatedCountdown = (e) => {
     const { name, value } = e.target;
-    updateCountdown(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    if (value < 60 && value >= 0) {
+      updateCountdown(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
   };  
 
   const startTimer = () => {
@@ -59,32 +84,50 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-       <Timer>
-          <p> Start your timer: </p>
-          <p> Minutes </p>
-          <input
-          onChange={updatedCountdown}
-          label="Minutes"
-          type="number"
-          value={countdown.minutes}
-          name="minutes"
-          disabled={isTimerBlocked}
-          max={60}
-        />
-          <p> Seconds </p>
-          <input
-          onChange={updatedCountdown}
-          label="Seconds"
-          type="number"
-          value={countdown.seconds}
-          name="seconds"
-          disabled={isTimerBlocked}
-          max={60}
-        />
-          <button onClick={startTimer}> Press here to start</button>
-          <p> Time: {convertSecondsToMinutes(currentCountdown)} </p>
-       </Timer>
+        <h1>Timer: </h1>
       </header>
+      <body>
+      {currentCountdown > 0 ?
+      <Timingscreen
+        stopTimer={() => startCountdown(0)}
+        time={convertSecondsToMinutes(currentCountdown)}
+        />
+          :
+            <Timer>
+            <Inputs>
+            <>
+            <p> Minutes </p>
+            <Input
+            onChange={updatedCountdown}
+            label="Minutes"
+            type="number"
+            value={countdown.minutes}
+            name="minutes"
+            disabled={isTimerBlocked}
+            max={59}
+            min={0}
+          />
+          </>
+          <>
+            <p> Seconds </p>
+            <Input
+            onChange={updatedCountdown}
+            label="Seconds"
+            type="number"
+            value={countdown.seconds}
+            name="seconds"
+            disabled={isTimerBlocked}
+            max={59}
+            min={0}
+          />
+          </>
+          </Inputs>
+            <Button onClick={startTimer}> Press here to start</Button>
+         </Timer>
+
+      }
+ 
+      </body>
     </div>
   );
 }
