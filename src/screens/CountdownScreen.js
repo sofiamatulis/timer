@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components'
-import Button from './styles'
+import Button from '../styles'
 
 const TimingCount = styled.p`
   font-size: 4rem;
 `
-const Timingscreen = ({ time, stopTimer }) => {
+const CountdownScreen = ({ time, stopTimer }) => {
   return (
     <div>
       <TimingCount>{time}</TimingCount>
@@ -14,4 +14,4 @@ const Timingscreen = ({ time, stopTimer }) => {
   );
 }
 
-export default Timingscreen;
+export default CountdownScreen;
