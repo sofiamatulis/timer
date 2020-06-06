@@ -11,10 +11,8 @@ const Timer = styled.div`
   background-color: #E23D28;
   color: white;
   font-size: 3rem;
-  padding: 1rem 1rem;
+  padding: 4rem 4rem;
 `
-
-
 
 const Input = styled.input`
   min-height: 100px;
@@ -34,8 +32,6 @@ function App() {
   const [countdown, updateCountdown] = useState({ minutes: 0, seconds: 0})
 
   const [currentCountdown, startCountdown] = useState(0)
-
-  const [isTimerBlocked, blockTimer] = useState(false)
 
   const updatedCountdown = (e) => {
     // Only allow for numbers 0 to 9
@@ -57,7 +53,6 @@ function App() {
     }
     const secs = parseInt(countdown.seconds) + mins
     startCountdown(secs)
-    blockTimer(true)
   }
 
 
@@ -67,18 +62,24 @@ function App() {
       currentCountdown > 0 && setInterval(() => startCountdown(currentCountdown - 1), 1000);
       return () => {
         clearInterval(timer)
-        blockTimer(false)
       };
     }
   }, [currentCountdown]);
+
+  const formatSeconds = (seconds) => {
+    if (seconds.toString().length === 1) {
+      return seconds.toString().padStart(2, '0')
+    }
+    return seconds
+  } 
 
   const convertSecondsToMinutes = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds - minutes * 60;
     if (seconds < 60) {
-      return `0:${seconds}`
+      return `0:${formatSeconds(seconds)}`
     } else if (seconds > 60) {
-      return `${minutes}:${remainingSeconds}`
+      return `${minutes}:${formatSeconds(remainingSeconds)}`
     } else {
       return '0:00'
     }
@@ -106,7 +107,6 @@ function App() {
             type="number"
             value={countdown.minutes}
             name="minutes"
-            disabled={isTimerBlocked}
             max={59}
             min={0}
           />
@@ -119,13 +119,16 @@ function App() {
             type="number"
             value={countdown.seconds}
             name="seconds"
-            disabled={isTimerBlocked}
             max={59}
             min={0}
           />
           </>
           </Inputs>
-            <Button onClick={startTimer}> Press here to start</Button>
+            <Button 
+            disabled={countdown.minutes === 0 && countdown.seconds === 0}
+            onClick={startTimer}> 
+            Press here to start
+            </Button>
          </Timer>
 
       }

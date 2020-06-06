@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import Button from './styles'
 
 const TimingCount = styled.p`
-
-
+  font-size: 4rem;
 `
 const Timingscreen = ({ time, stopTimer }) => {
   return (
