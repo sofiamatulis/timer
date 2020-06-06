@@ -38,8 +38,11 @@ function App() {
   const [isTimerBlocked, blockTimer] = useState(false)
 
   const updatedCountdown = (e) => {
+    // Only allow for numbers 0 to 9
+    const numbersRegex = "^[0-9^$]+$"
     const { name, value } = e.target;
-    if (value < 60 && value >= 0) {
+    // Allow update to happen if the string is empty, the values are in the correct range and they match the correct regex
+    if (value === ''  || (value < 60 && value >= 0 && value.match(numbersRegex) && value.length <= 2)) {
       updateCountdown(prevState => ({
         ...prevState,
         [name]: value
