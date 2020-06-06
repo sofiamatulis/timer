@@ -10,7 +10,7 @@ const convertSecondsToMinutes = (seconds) => {
   const remainingSeconds = seconds - minutes * 60;
   if (seconds < 60) {
     return `0:${formatSeconds(seconds)}`
-  } else if (seconds > 60) {
+  } else if (seconds >= 60) {
     return `${minutes}:${formatSeconds(remainingSeconds)}`
   } else {
     return '0:00'
