@@ -1,12 +1,20 @@
 // Absolute imports
 import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 
 // Local imports
 import CountdownScreen from './screens/CountdownScreen'
 import TimerStartScreen from './screens/TimerStartScreen'
 
 // Utils
-import { convertSecondsToMinutes, convertMinutesToSeconds } from './utils/time'
+import { formatTime, convertMinutesToSeconds } from './utils/time'
+
+const Container = styled.div`
+  & h1 {
+    font-size: 1rem;
+    text-align: center;
+  }
+`
 
 const Timer = () => {
 
@@ -14,6 +22,7 @@ const [activeCountdown, startCountdown] = useState(0)
 
 const [countdown, updateCountdown] = useState({ minutes: 0, seconds: 0})
 
+// Triggering timer to start
 const startTimer = () => {
   let mins = 0
   // converting mins to seconds if available
@@ -25,6 +34,7 @@ const startTimer = () => {
   startCountdown(totalSeconds)
 }
 
+// Updating countdown minutes and seconds when input changes
 const updatedCountdown = (e) => {
   const { name, value } = e.target;
   // Allow update to happen if the values are in the correct range
@@ -47,18 +57,19 @@ const updatedCountdown = (e) => {
     }
   }, [activeCountdown]);
 
+  // Resetting the timer
   const stopTimer = () => {
     startCountdown(0)
     updateCountdown({ minutes: 0, seconds: 0 })
   }
 
   return (
-    <>
-      <p>Timer: </p>
+    <Container>
+      <h1> Timer </h1>
       {activeCountdown > 0 ?
         <CountdownScreen
           stopTimer={stopTimer}
-          time={convertSecondsToMinutes(activeCountdown)}
+          time={formatTime(activeCountdown)}
         />
       :
         <TimerStartScreen
@@ -68,7 +79,7 @@ const updatedCountdown = (e) => {
           seconds={countdown.seconds}
       />
       }
-   </>
+   </Container>
   )
 }
 

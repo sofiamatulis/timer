@@ -1,17 +1,18 @@
-const formatSeconds = (seconds) => {
-  if (seconds.toString().length === 1) {
-    return seconds.toString().padStart(2, '0')
+// Single digits to return double digits (00, 01, 02,... 10)
+const formatDoubleDigits = (number) => {
+  if (number.toString().length === 1) {
+    return number.toString().padStart(2, '0')
   }
-  return seconds
+  return number.toString()
 } 
 
-const convertSecondsToMinutes = (seconds) => {
+const formatTime = (seconds) => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds - minutes * 60;
   if (seconds < 60) {
-    return `0:${formatSeconds(seconds)}`
+    return `0:${formatDoubleDigits(seconds)}`
   } else if (seconds >= 60) {
-    return `${minutes}:${formatSeconds(remainingSeconds)}`
+    return `${minutes}:${formatDoubleDigits(remainingSeconds)}`
   } else {
     return '0:00'
   }
@@ -21,8 +22,8 @@ const convertMinutesToSeconds = (minutes) => {
   return  parseInt(minutes) * 60 
 }
 
-
 export {
-  convertSecondsToMinutes,
-  convertMinutesToSeconds
+  formatTime,
+  convertMinutesToSeconds,
+  formatDoubleDigits
 }

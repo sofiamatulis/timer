@@ -2,15 +2,18 @@ import React from 'react';
 import styled from 'styled-components'
 import Button from '../styles'
 
-const TimingCount = styled.p`
-  font-size: 4rem;
+const Container = styled.div`
+  text-align: center;
+  & p {
+    font-size: 1rem;
+  }
 `
 const CountdownScreen = ({ time, stopTimer }) => {
   return (
-    <div>
-      <TimingCount>{time}</TimingCount>
+    <Container>
+      <p>{time}</p>
       <Button onClick={stopTimer}> Stop timer </Button>
-    </div>
+    </Container>
   );
 }
 

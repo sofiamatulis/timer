@@ -9,17 +9,26 @@ const TimerContainer = styled.div`
   align-items: center;
   background-color: #E23D28;
   color: white;
-  font-size: 3rem;
+  font-size: 1rem;
   padding: 4rem 4rem;
 `
 
 const Input = styled.input`
   min-height: 100px;
-  font-size: 4rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 3rem;
+  max-height: 3rem;
+  outline: 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
 `
 
 const Inputs = styled.div`
   display: flex;
+  align-items: center;
   padding-bottom: 2rem;
   & p, input {
     margin-right: 1rem;
